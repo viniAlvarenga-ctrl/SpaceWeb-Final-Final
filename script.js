@@ -343,8 +343,8 @@ if (parametro) {
   
     gameOverScreen.style.display = "block";
   
-    const pontosTeste = 7020;
-    const nomeTeste = 'testando'
+    const pontosTeste = 120;
+    const nomeTeste = 'again'
   
     gameOverPontos.textContent = pontos;
   
