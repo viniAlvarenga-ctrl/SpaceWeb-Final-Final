@@ -81,91 +81,91 @@
   </audio>
 
   <script>
-    // Tabela de classificação
-    var jogadores = [];
+   // Simulação de pontuação do jogo
+var pontuacao = 0;
+var vidas = 3;
 
-    // Função para adicionar o jogador e pontuação atual à tabela
-    function adicionarJogador(nome, pontuacao) {
-      // Verifica se o jogador já está na tabela
-      var jogadorExistente = jogadores.find(function(jogador) {
-        return jogador.nome === nome;
-      });
+// Tabela de classificação
+var jogadores = [];
 
-      // Se o jogador não existir na tabela, adiciona-o
-      if (!jogadorExistente) {
-        jogadores.push({ nome: nome, pontuacao: pontuacao });
-      }
-    }
+// Função para adicionar o jogador e pontuação atual à tabela
+function adicionarJogador(nome, pontuacao) {
+  jogadores.push({ nome: nome, pontuacao: pontuacao });
+}
 
-    // Função para salvar a tabela de classificação no armazenamento local
-    function salvarTabela() {
-      localStorage.setItem("tabelaPontuacoes", JSON.stringify(jogadores));
-    }
+// Função para salvar os jogadores no sessionStorage
+function salvarJogadores() {
+  // Converte os jogadores para JSON e salva no sessionStorage
+  sessionStorage.setItem("jogadores", JSON.stringify(jogadores));
+}
 
-    // Função para carregar a tabela de classificação do armazenamento local
-    function carregarTabela() {
-      var tabelaPontuacoes = localStorage.getItem("tabelaPontuacoes");
-      if (tabelaPontuacoes) {
-        jogadores = JSON.parse(tabelaPontuacoes);
-      }
-    }
+// Função para carregar os jogadores do sessionStorage
+function carregarJogadores() {
+  // Obtém os jogadores salvos do sessionStorage
+  var jogadoresSalvos = sessionStorage.getItem("jogadores");
 
-    function exibirPontuacao() {
-      // Classificar os jogadores por pontuação (maior para menor)
-      jogadores.sort(function(a, b) {
-        return b.pontuacao - a.pontuacao;
-      });
+  // Verifica se existem jogadores salvos
+  if (jogadoresSalvos) {
+    // Converte os jogadores de JSON para objeto JavaScript
+    jogadores = JSON.parse(jogadoresSalvos);
+  }
+}
 
-      // Criar tabela de classificação
-      var tabela = document.createElement("table");
+function exibirPontuacao() {
+  // Classificar os jogadores por pontuação (maior para menor)
+  jogadores.sort(function(a, b) {
+    return b.pontuacao - a.pontuacao;
+  });
 
-      // Cabeçalho da tabela
-      var cabecalho = tabela.createTHead();
-      var linhaCabecalho = cabecalho.insertRow();
-      var celulaPosicao = linhaCabecalho.insertCell();
-      var celulaNome = linhaCabecalho.insertCell();
-      var celulaPontuacao = linhaCabecalho.insertCell();
-      celulaPosicao.textContent = "Posição";
-      celulaNome.textContent = "Nome";
-      celulaPontuacao.textContent = "Pontuação";
+  // Criar tabela de classificação
+  var tabela = document.createElement("table");
 
-      // Linhas com dados dos jogadores
-      var corpoTabela = tabela.createTBody();
-      for (var i = 0; i < jogadores.length; i++) {
-        var linha = corpoTabela.insertRow();
-        var celulaPosicao = linha.insertCell();
-        var celulaNome = linha.insertCell();
-        var celulaPontuacao = linha.insertCell();
-        celulaPosicao.textContent = i + 1;
-        celulaNome.textContent = jogadores[i].nome;
-        celulaPontuacao.textContent = jogadores[i].pontuacao;
-      }
+  // Cabeçalho da tabela
+  var cabecalho = tabela.createTHead();
+  var linhaCabecalho = cabecalho.insertRow();
+  var celulaPosicao = linhaCabecalho.insertCell();
+  var celulaNome = linhaCabecalho.insertCell();
+  var celulaPontuacao = linhaCabecalho.insertCell();
+  celulaPosicao.textContent = "Posição";
+  celulaNome.textContent = "Nome";
+  celulaPontuacao.textContent = "Pontuação";
 
-      // Exibir tabela de classificação
-      var divClassificacao = document.createElement("div");
-      divClassificacao.appendChild(tabela);
-      document.body.appendChild(divClassificacao);
-    }
+  // Linhas com dados dos jogadores
+  var corpoTabela = tabela.createTBody();
+  for (var i = 0; i < jogadores.length; i++) {
+    var linha = corpoTabela.insertRow();
+    var celulaPosicao = linha.insertCell();
+    var celulaNome = linha.insertCell();
+    var celulaPontuacao = linha.insertCell();
+    celulaPosicao.textContent = i + 1;
+    celulaNome.textContent = jogadores[i].nome;
+    celulaPontuacao.textContent = jogadores[i].pontuacao;
+  }
 
-    // Carregar a tabela de classificação do armazenamento local
-    carregarTabela();
+  // Exibir tabela de classificação
+  var divClassificacao = document.createElement("div");
+  divClassificacao.appendChild(tabela);
+  document.body.appendChild(divClassificacao);
+}
 
-    // Obtém o nome do jogador e a pontuação atual da página anterior
-    var nomeJogador = localStorage.getItem("nomeJogador");
-    var pontos = parseInt(localStorage.getItem("pontos"));
+// Carrega os jogadores do sessionStorage
+carregarJogadores();
 
-    // Verifica se o nome do jogador e a pontuação existem
-    if (nomeJogador && !isNaN(pontos)) {
-      // Adiciona o jogador à tabela de classificação
-      adicionarJogador(nomeJogador, pontos);
+// Obtém o nome do jogador e a pontuação atual da página anterior
+var nomeJogador = sessionStorage.getItem("nomeJogador");
+var pontos = parseInt(sessionStorage.getItem("pontos"));
 
-      // Salva a tabela de classificação no armazenamento local
-      salvarTabela();
-    }
+// Verifica se o nome do jogador existe
+if (nomeJogador) {
+  // Adiciona o jogador e a pontuação atual à tabela
+  adicionarJogador(nomeJogador, pontos);
 
-    // Exibe a tabela de pontuações atualizada
-    exibirPontuacao();
+  // Salva os jogadores permanentemente
+  salvarJogadores();
+}
 
+// Exibe a tabela de pontuações atualizada
+exibirPontuacao();
   </script>
 </body>
 </html>
