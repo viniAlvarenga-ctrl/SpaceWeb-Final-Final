@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function(){
-  localStorage.clear();
+  
 
    // Obtém a string da URL atual
 const queryString = window.location.search;
