@@ -1,20 +1,18 @@
 document.addEventListener("DOMContentLoaded", function(){
-  
+  // Obtém a string da URL atual
+  const queryString = window.location.search;
 
-   // Obtém a string da URL atual
-const queryString = window.location.search;
+  // Cria um objeto URLSearchParams a partir da string da URL
+  const urlParams = new URLSearchParams(queryString);
 
-// Cria um objeto URLSearchParams a partir da string da URL
-const urlParams = new URLSearchParams(queryString);
+  // Obtém o valor do parâmetro 'parametro'
+  const parametro = urlParams.get('parametro');
 
-// Obtém o valor do parâmetro 'parametro'
-const parametro = urlParams.get('parametro');
-
-// Verifica se o parâmetro existe
-if (parametro) {
-  // Faça algo com o valor do parâmetro
-  console.log(parametro);
-}
+  // Verifica se o parâmetro existe
+  if (parametro) {
+    // Faça algo com o valor do parâmetro
+    console.log(parametro);
+  }
 
   var nave = document.getElementById("nave");
   const projeteisContainer = document.getElementById("projeteis");
@@ -28,17 +26,16 @@ if (parametro) {
   let inimigos = [];
   let lvl = 1;
   let _acceleration = 0.3;
-  
-   
+
   const width_left = 70;
   const width_right = screen.width - 70;  
-  
+
   document.addEventListener("keydown", moveNave);
   document.addEventListener("keyup", reset_acceleration);
+
   function loop(){
     nave.style.top = 600 + 'px';
     requestAnimationFrame(loop);
-    
 
     // Funções de atualização do jogo
     moverProjeteis();
@@ -195,28 +192,28 @@ if (parametro) {
       inimigo.style.height = 70 + 'px';
       inimigo.style.width = 90 + 'px';
     }
-  
+
     const limiteEsquerdo = 30; // Defina o limite esquerdo para o movimento do inimigo
     const limiteDireito = window.innerWidth - 130; // Defina o limite direito para o movimento do inimigo
     const posicaoInicialX = Math.random() * (limiteDireito - limiteEsquerdo) + limiteEsquerdo;
     const posicaoInicialY = 0;
-  
+
     inimigo.style.left = posicaoInicialX + "px";
     inimigo.style.top = posicaoInicialY + "px";
-  
+
     inimigos.push({
       element: inimigo,
       posX: posicaoInicialX,
       posY: posicaoInicialY,
     });
   }
-  
+
   function moverInimigos(){
     for (let i = 0; i < inimigos.length; i++){
       const inimigo = inimigos[i];
       inimigo.posY += 7;
       inimigo.element.style.transform = `translateY(${inimigo.posY}px)`;
-  
+
       if(inimigo.posY > window.max-innerHeight || inimigo.posY > nave.offsetTop){
         inimigosContainer.removeChild(inimigo.element);
         inimigos.splice(i, 1);
@@ -231,11 +228,11 @@ if (parametro) {
       }
     }
   }
-  
+
   function colisao(element1, element2){
     const rect1 = element1.getBoundingClientRect();
     const rect2 = element2.getBoundingClientRect();
-  
+
     return !(
       rect1.top > rect2.bottom ||
       rect1.bottom < rect2.top ||
@@ -247,7 +244,7 @@ if (parametro) {
   function verificarColisao(){
     for (let i = 0; i < projeteis.length; i++){
       const projetil = projeteis[i];
-  
+
       for (let j = 0; j < inimigos.length; j++){
         const inimigo = inimigos[j];
         if (colisao(projetil.element, inimigo.element)){
@@ -256,11 +253,11 @@ if (parametro) {
           explosao.style.left = inimigo.posX + "px";
           explosao.style.top = inimigo.posY + "px";
           projeteisContainer.appendChild(explosao);
-  
+
           setTimeout(function(){
             projeteisContainer.removeChild(explosao);
           },3000);
-  
+
           projeteisContainer.removeChild(projetil.element);
           projeteis.splice(i, 1);
 
@@ -317,6 +314,9 @@ if (parametro) {
     }
 
     pontosElement.innerText = pontos;
+
+    // Armazena os pontos no sessionStorage
+    sessionStorage.setItem("pontos", pontos);
   }
 
   function reproduzirSom(stringsom){
@@ -337,33 +337,29 @@ if (parametro) {
   function gameover() {
     const gameContainer = document.getElementById("fundo");
     gameContainer.style.display = "none";
-  
+
     const gameOverScreen = document.getElementById("gameover");
     const gameOverPontos = document.getElementById("gameover-pontos");
-  
+
     gameOverScreen.style.display = "block";
-  
-    const pontosTeste = 1420;
-    const nomeTeste = parametro;
-  
+
+    const pontosTeste = 4220;
+    const nomeTeste = 'kkaak';
+
     gameOverPontos.textContent = pontos;
-  
+
     clearInterval(inimigosInterval);
     clearInterval(projeteisInterval);
     clearInterval(colisaoInterval);
     reproduzirSom('aplauso.wav');
-  
-    // Armazenar o nome do jogador em localStorage
-    localStorage.setItem("nomeJogador", nomeTeste);
-  
-    // Armazenar o valor dos pontos em localStorage
-    localStorage.setItem("pontos", pontosTeste);
-  
+
+    // Armazenar o nome do jogador em sessionStorage
+    sessionStorage.setItem("nomeJogador", nomeTeste);
+
+    // Armazenar o valor dos pontos em sessionStorage
+    sessionStorage.setItem("pontos", pontosTeste);
+
     // Redirecionar para a página de scores
     window.location.href = "tela-de-scores.html";
   }
-  
-  
-  
-
 });
