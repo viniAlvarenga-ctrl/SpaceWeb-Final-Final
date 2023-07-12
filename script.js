@@ -343,8 +343,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
     gameOverScreen.style.display = "block";
 
-    const pontosTeste = 4220;
-    const nomeTeste = 'kkaak';
+    const pontosTeste = 666;
+    const nomeTeste = parametro;
 
     gameOverPontos.textContent = pontos;
 
