@@ -337,8 +337,8 @@ document.addEventListener("DOMContentLoaded", function(){
   function gameover() {
     
 
-    const pontosTeste = 4220;
-    const nomeTeste = 'kkaak';
+    const pontosTeste = pontos;
+    const nomeTeste = parametro;
 
     
 
