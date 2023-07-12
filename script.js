@@ -344,7 +344,7 @@ document.addEventListener("DOMContentLoaded", function(){
     gameOverScreen.style.display = "block";
 
     const pontosTeste = 666;
-    const nomeTeste = parametro;
+    const nomeTeste = jogador11;
 
     gameOverPontos.textContent = pontos;
 
