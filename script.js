@@ -335,18 +335,12 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
   function gameover() {
-    const gameContainer = document.getElementById("fundo");
-    gameContainer.style.display = "none";
-
-    const gameOverScreen = document.getElementById("gameover");
-    const gameOverPontos = document.getElementById("gameover-pontos");
-
-    gameOverScreen.style.display = "block";
+    
 
     const pontosTeste = 4220;
     const nomeTeste = 'kkaak';
 
-    gameOverPontos.textContent = pontos;
+    
 
     clearInterval(inimigosInterval);
     clearInterval(projeteisInterval);
