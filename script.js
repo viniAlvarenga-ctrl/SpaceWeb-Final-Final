@@ -337,8 +337,9 @@ document.addEventListener("DOMContentLoaded", function(){
   function gameover() {
     
 
-    const pontosTeste = pontos;
-    const nomeTeste = parametro;
+    var pontosElement = document.getElementById("valorPontos");
+    var pontosFinal = parseInt(pontosElement.innerText);
+    const nomeFinal = parametro;
 
     
 
@@ -348,10 +349,10 @@ document.addEventListener("DOMContentLoaded", function(){
     reproduzirSom('aplauso.wav');
 
     // Armazenar o nome do jogador em sessionStorage
-    sessionStorage.setItem("nomeJogador", nomeTeste);
+    sessionStorage.setItem("nomeJogador", nomeFinal);
 
     // Armazenar o valor dos pontos em sessionStorage
-    sessionStorage.setItem("pontos", pontosTeste);
+    sessionStorage.setItem("pontos", pontosFinal);
 
     // Redirecionar para a página de scores
     window.location.href = "tela-de-scores.html";
